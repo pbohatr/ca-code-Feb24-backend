@@ -19,3 +19,5 @@ async function registerUser(body) {
         return Promise.reject("Unable to create Account. Try again later!")
     }
 }
+
+module.exports = service;
