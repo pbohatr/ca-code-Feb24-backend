@@ -19,7 +19,27 @@ const CompanySave = async (req, res) => {
         res.status(500).json(error);
     }
 }
+const Login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const newUser = await CompanyService.loginUser(email, password);
+        if (newUser) {
+            const token = await createSecretToken(newUser._id);
+            const responseObject = {
+                userId: newUser._id,
+                token: token,
+                name: newUser.name
+            };
+            res.status(200).json({data: responseObject});
+        } else {
+            res.status(400).json({ message: "User Login failed" });
+        }
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 
 module.exports = {
-    CompanySave
+    CompanySave,
+    Login
 };
