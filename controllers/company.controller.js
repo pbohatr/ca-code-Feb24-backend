@@ -8,9 +8,9 @@ const CompanySave = async (req, res) => {
         if (newUser) {
             const token = await createSecretToken(newUser._id);
             const userData = {
-                ...newUser.toObject(), token: token
+                ...newUser.toObject(), token: token, 
             }
-            res.status(201).json(userData);
+            res.status(201).json({companyData : userData});
         }
         else {
             res.status(400).json({ message: "User registration failed" });
