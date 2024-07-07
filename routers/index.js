@@ -1,6 +1,5 @@
-const router = require('express').Router()
+const router = require('express').Router();
 
+router.use('/companyRegister/auth', require('./company.router')); // Correct path
 
-router.use('/api/users', require('./user.router'))
-
-module.exports = router
+module.exports = router;
