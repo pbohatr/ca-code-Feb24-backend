@@ -30,10 +30,20 @@ const Login = async (req, res) => {
                 token: token,
                 name: newUser.name
             };
-            res.status(200).json({data: responseObject});
+            res.status(200).json({ data: responseObject });
         } else {
             res.status(400).json({ message: "User Login failed" });
         }
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+const getFirm = async (req, res) => {
+    try {
+        console.log("req.user", req.user)
+        const firmData = await CompanyService.getFirmById(req.user);
+        res.status(200).json(firmData);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -41,5 +51,6 @@ const Login = async (req, res) => {
 
 module.exports = {
     CompanySave,
-    Login
+    Login,
+    getFirm
 };
