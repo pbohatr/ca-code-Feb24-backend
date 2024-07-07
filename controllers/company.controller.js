@@ -30,7 +30,7 @@ const Login = async (req, res) => {
                 token: token,
                 name: newUser.name
             };
-            res.status(200).json({data: responseObject});
+            res.status(200).json({result: responseObject});
         } else {
             res.status(400).json({ message: "User Login failed" });
         }
