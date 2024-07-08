@@ -8,9 +8,9 @@ const CompanySave = async (req, res) => {
         if (newUser) {
             const token = await createSecretToken(newUser._id);
             const userData = {
-                ...newUser.toObject(), token: token
+                ...newUser.toObject(), token: token, 
             }
-            res.status(201).json(userData);
+            res.status(201).json({companyData : userData});
         }
         else {
             res.status(400).json({ message: "User registration failed" });
@@ -37,9 +37,38 @@ const Login = async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
+};
+
+const getFirm = async (req, res) => {
+    try {
+        console.log("req.user", req.user)
+        const firmData = await CompanyService.getFirmById(req.user);
+        res.status(200).json(firmData);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
+const addFirm = async (req,res) => {
+    try{
+        console.log("req.user",req.body)
+        const addfirmData = await CompanyService.addFirmNew(req.body)
+        if(addfirmData){
+        res.status(201).json({addfirmData});
+        }else{
+            res.status(400).json({ message: "Add company failed" });
+        }
+    }catch(error){
+        res.status(500).json(error);
+
+    }
+
+
 }
 
 module.exports = {
     CompanySave,
-    Login
+    Login,
+    addFirm,
+    getFirm
 };
