@@ -7,6 +7,7 @@ service.registerUser = registerUser;;
 service.loginUser = loginUser;
 service.getFirmById = getFirmById;
 service.addFirmNew = addFirmNew;
+service.editFirmData = editFirmData
 
 
 async function registerUser(body) {
@@ -61,15 +62,34 @@ async function getFirmById(body) {
     }
 }
 
-async function addFirmNew (body){
-    try{
-        const addCompany = await Firm.create(body);
-        console.log("user",addCompany)
-        return addCompany
-    }catch{
-        return Promise.reject("Unable to add company. Try again later!")
+async function addFirmNew (body,user){
+    try {
+        console.log("body>>>", body, user);
+        const addCompany = await Firm.create({ ...body, companyId: user?._id });
+        console.log("addCompany>>>", addCompany);
+        return addCompany;
+    } catch(error) {
+        console.error("Error creating company:", error);
+        return Promise.reject("Unable to add company. Try again later!");
+    }
+    
+}
+
+async function editFirmData(body, user) {
+    try {
+        console.log("body>>>", body, user);
+        const editCompany = await Firm.findByIdAndUpdate(
+            { ...body, companyId: user?._id },
+            { new: true } // Return the updated document
+        );
+        console.log("editCompany>>>", editCompany);
+        return editCompany;
+    } catch (error) {
+        console.error("Error editing company:", error);
+        return Promise.reject("Unable to edit company. Try again later!");
     }
 }
+
 
 
 

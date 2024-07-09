@@ -51,10 +51,12 @@ const getFirm = async (req, res) => {
 
 const addFirm = async (req,res) => {
     try{
-        console.log("req.user",req.body)
-        const addfirmData = await CompanyService.addFirmNew(req.body)
+        console.log("req.user",req.body)    
+            console.log("req.user", req.user)
+
+        const addfirmData = await CompanyService.addFirmNew(req.body,req.user)
         if(addfirmData){
-        res.status(201).json({addfirmData});
+        res.status(201).json({FirmData: addfirmData});
         }else{
             res.status(400).json({ message: "Add company failed" });
         }
@@ -66,9 +68,30 @@ const addFirm = async (req,res) => {
 
 }
 
+
+const editFirm = async (req, res) => {
+    try {
+        console.log("req.body", req.body);
+        console.log("req.user", req.user);
+
+        const { _id } = req.user; // Get the firm ID from the req.user
+
+        const editFirmData = await CompanyService.editFirmData(req.body, req.user);
+        if (editFirmData) {
+            res.status(200).json({ FirmData: editFirmData });
+        } else {
+            res.status(400).json({ message: "Edit company failed" });
+        }
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+
 module.exports = {
     CompanySave,
     Login,
     addFirm,
-    getFirm
+    getFirm,
+    editFirm
 };
