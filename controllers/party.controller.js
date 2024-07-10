@@ -19,7 +19,17 @@ const getParties = async (req, res) => {
     }
 }
 
+const updateParty = async (req, res) => {
+    try {
+        const updatedParty = await PartyService.updatePartyDetails(req.params, req.user._id, req.body);
+        res.status(200).json(updatedParty);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
 module.exports = {
     PartySave,
-    getParties
+    getParties,
+    updateParty
 };
