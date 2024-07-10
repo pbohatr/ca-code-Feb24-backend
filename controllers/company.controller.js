@@ -73,10 +73,9 @@ const editFirm = async (req, res) => {
     try {
         console.log("req.body", req.body);
         console.log("req.user", req.user);
-
-        const { _id } = req.user; // Get the firm ID from the req.user
-
-        const editFirmData = await CompanyService.editFirmData(req.body, req.user);
+        const { id } = req.params;
+        console.log("id",id) // Get the firm ID from the request parameters
+        const editFirmData = await CompanyService.editFirmData(id, req.body, req.user);
         if (editFirmData) {
             res.status(200).json({ FirmData: editFirmData });
         } else {
@@ -86,6 +85,7 @@ const editFirm = async (req, res) => {
         res.status(500).json(error);
     }
 };
+
 
 
 module.exports = {

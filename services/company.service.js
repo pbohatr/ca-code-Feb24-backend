@@ -74,14 +74,26 @@ async function addFirmNew (body,user){
     }
     
 }
-
-async function editFirmData(body, user) {
+   async function editFirmData(id, body, user) {
     try {
-        console.log("body>>>", body, user);
-        const editCompany = await Firm.findByIdAndUpdate(
-            { ...body, companyId: user?._id },
-            { new: true } // Return the updated document
-        );
+        console.log("body>>>", body);
+        console.log("user>>>", user);
+        console.log("id>>>", id);
+
+        const query = { _id: id };
+        const update = { ...body, companyId: user?._id };
+        const options = { new: true };
+
+        console.log("query>>>", query);
+        console.log("update>>>", update);
+        console.log("options>>>", options);
+
+        const editCompany = await Firm.findByIdAndUpdate(query, update, options);
+
+        if (!editCompany) {
+            console.log("No company found with the specified ID.");
+        }
+
         console.log("editCompany>>>", editCompany);
         return editCompany;
     } catch (error) {
@@ -89,6 +101,10 @@ async function editFirmData(body, user) {
         return Promise.reject("Unable to edit company. Try again later!");
     }
 }
+
+    
+
+
 
 
 

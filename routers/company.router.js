@@ -7,7 +7,7 @@ router.post('/signup', Company.CompanySave)
 router.post('/signin', Company.Login)
 router.get('/getfirm', Middleware.verifyToken, Company.getFirm)
 router.post('/firm_registration',Middleware.verifyToken,Company.addFirm)
-router.put('/edit',Middleware.verifyToken,Company.editFirm)
+router.put('/update_firm/:id',Company.editFirm)
 
 
 
