@@ -8,9 +8,9 @@ const CompanySave = async (req, res) => {
         if (newUser) {
             const token = await createSecretToken(newUser._id);
             const userData = {
-                ...newUser.toObject(), token: token, 
+                ...newUser.toObject(), token: token,
             }
-            res.status(201).json({companyData : userData});
+            res.status(201).json({ companyData: userData });
         }
         else {
             res.status(400).json({ message: "User registration failed" });
@@ -30,7 +30,7 @@ const Login = async (req, res) => {
                 token: token,
                 name: newUser.name
             };
-            res.status(200).json({result: responseObject});
+            res.status(200).json({ result: responseObject });
         } else {
             res.status(400).json({ message: "User Login failed" });
         }
@@ -49,18 +49,18 @@ const getFirm = async (req, res) => {
     }
 }
 
-const addFirm = async (req,res) => {
-    try{
-        console.log("req.user",req.body)    
-            console.log("req.user", req.user)
+const addFirm = async (req, res) => {
+    try {
+        console.log("req.user", req.body)
+        console.log("req.user", req.user)
 
-        const addfirmData = await CompanyService.addFirmNew(req.body,req.user)
-        if(addfirmData){
-        res.status(201).json({FirmData: addfirmData});
-        }else{
+        const addfirmData = await CompanyService.addFirmNew(req.body, req.user)
+        if (addfirmData) {
+            res.status(201).json({ FirmData: addfirmData });
+        } else {
             res.status(400).json({ message: "Add company failed" });
         }
-    }catch(error){
+    } catch (error) {
         res.status(500).json(error);
 
     }
@@ -71,11 +71,8 @@ const addFirm = async (req,res) => {
 
 const editFirm = async (req, res) => {
     try {
-        console.log("req.body", req.body);
-        console.log("req.user", req.user);
-        const { id } = req.params;
-        console.log("id",id) // Get the firm ID from the request parameters
-        const editFirmData = await CompanyService.editFirmData(id, req.body, req.user);
+        
+        const editFirmData = await CompanyService.editFirmData(req.params.id, req.body, req.user);
         if (editFirmData) {
             res.status(200).json({ FirmData: editFirmData });
         } else {
