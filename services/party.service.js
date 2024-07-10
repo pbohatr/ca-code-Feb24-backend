@@ -1,6 +1,5 @@
 const Party = require('../model/party.schema');
 const Firm = require('../model/firm.schema');
-const PasswordService = require('./password.service');
 
 let service = {};
 service.addParty = addParty;

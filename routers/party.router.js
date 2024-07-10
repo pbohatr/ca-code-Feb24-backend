@@ -11,4 +11,5 @@ router.patch('/:firmId/update/:id',Middleware.verifyToken, Party.updateParty)
 
 
 
+
 module.exports = router;
