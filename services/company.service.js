@@ -62,39 +62,28 @@ async function getFirmById(body) {
     }
 }
 
-async function addFirmNew (body,user){
+async function addFirmNew(body, user) {
     try {
         console.log("body>>>", body, user);
         const addCompany = await Firm.create({ ...body, companyId: user?._id });
         console.log("addCompany>>>", addCompany);
         return addCompany;
-    } catch(error) {
+    } catch (error) {
         console.error("Error creating company:", error);
         return Promise.reject("Unable to add company. Try again later!");
     }
-    
+
 }
-   async function editFirmData(id, body, user) {
+async function editFirmData(id, body, user) {
     try {
-        console.log("body>>>", body);
-        console.log("user>>>", user);
-        console.log("id>>>", id);
-
-        const query = { _id: id };
-        const update = { ...body, companyId: user?._id };
-        const options = { new: true };
-
-        console.log("query>>>", query);
-        console.log("update>>>", update);
-        console.log("options>>>", options);
-
-        const editCompany = await Firm.findByIdAndUpdate(query, update, options);
-
+        const getComapny = await Company.findById(user._id);
+        if (!getComapny) {
+            return Promise.reject("Not authorized!");
+        }
+        const editCompany = await Firm.findOneAndUpdate({ _id: id }, body, { new: true });
         if (!editCompany) {
             console.log("No company found with the specified ID.");
         }
-
-        console.log("editCompany>>>", editCompany);
         return editCompany;
     } catch (error) {
         console.error("Error editing company:", error);
@@ -102,7 +91,7 @@ async function addFirmNew (body,user){
     }
 }
 
-    
+
 
 
 
