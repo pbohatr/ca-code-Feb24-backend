@@ -5,6 +5,7 @@ const PasswordService = require('./password.service');
 let service = {};
 service.addParty = addParty;
 service.getAllParties = getAllParties;
+service.updatePartyDetails = updatePartyDetails;
 
 async function addParty(body, id, companyId) {
     try {
@@ -32,6 +33,24 @@ async function getAllParties(id, companyId) {
         return allParties;
     } catch (error) {
         return Promise.reject("Unable to get all party data. Try again later!")
+    }
+};
+
+async function updatePartyDetails(params, companyId, body) {
+    try {
+        const getFirm = await Firm.findById(params.firmId);
+        if (!getFirm) {
+            return Promise.reject("Firm not found!");
+        }
+        else {
+            if (getFirm.companyId.toString() !== companyId.toString()) {
+                return Promise.reject("Not authorized!");
+            }
+        }
+        const data = await Party.findOneAndUpdate({ _id: params.id }, body, { new: true });
+        return data;
+    } catch (error) {
+        return Promise.reject("Unable to update party data. Try again later!")
     }
 }
 
