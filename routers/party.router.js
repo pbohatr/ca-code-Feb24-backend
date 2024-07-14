@@ -6,6 +6,8 @@ const Middleware = require('../services/token.service')
 router.post('/:id/addparty', Middleware.verifyToken, Party.PartySave)
 router.get('/:id/getAllData', Middleware.verifyToken, Party.getParties)
 router.patch('/:firmId/update/:id',Middleware.verifyToken, Party.updateParty)
+router.delete('/:firmId/delete/:id',Middleware.verifyToken, Party.partyRemove)
+
 
 
 

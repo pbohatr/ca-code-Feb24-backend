@@ -6,6 +6,7 @@ let service = {};
 service.addParty = addParty;
 service.getAllParties = getAllParties;
 service.updatePartyDetails = updatePartyDetails;
+service.deleteParty = deleteParty;
 
 async function addParty(body, id, companyId) {
     try {
@@ -52,7 +53,26 @@ async function updatePartyDetails(params, companyId, body) {
     } catch (error) {
         return Promise.reject("Unable to update party data. Try again later!")
     }
-}
+};
+
+async function deleteParty(params, companyId) {
+    try {
+        console.log("params", params)
+        console.log(" companyId", companyId)
+
+        const getFirm = await Firm.findById(params.firmId);
+        console.log("getFirm",getFirm)
+
+        if (getFirm.companyId.toString() !== companyId.toString()) {
+            return Promise.reject("Not authorized!");
+        }
+        console.log("rrr")
+        await Party.findOneAndDelete({_id: params.id});
+        return true;
+    } catch (error) {
+        return Promise.reject("Unable to get all party data. Try again later!")
+    }
+};
 
 
 
