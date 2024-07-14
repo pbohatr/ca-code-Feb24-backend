@@ -1,6 +1,6 @@
 
 const router = require('express').Router();
-const Category = require('../controllers/category.schema')
+const Category = require('../controllers/category.controller')
 
 const Middleware = require('../services/token.service')
 router.post('/createCategoryName/:id',Middleware.verifyToken,Category.CategorySave )
