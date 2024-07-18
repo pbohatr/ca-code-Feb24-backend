@@ -71,7 +71,6 @@ const addFirm = async (req, res) => {
 
 const editFirm = async (req, res) => {
     try {
-        
         const editFirmData = await CompanyService.editFirmData(req.params.id, req.body, req.user);
         if (editFirmData) {
             res.status(200).json({ FirmData: editFirmData });

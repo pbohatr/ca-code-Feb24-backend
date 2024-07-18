@@ -14,6 +14,33 @@ const firmSchema = new Schema({
     acceptTerms: {
         type: Boolean
     },
+    companyLogo: {
+        type: String
+    },
+    signature: {
+        type: String
+    },
+    gstinNumber: {
+        type: String
+    },
+    businessAddress: {
+        type: String
+    },
+    pinCode: {
+        type: Number
+    },
+    state: {
+        type: String
+    },
+    businessDescription: {
+        type: String
+    },
+    businessType: {
+        type: String
+    },
+    businessCategory: {
+        type: String
+    },
     companyId:
     {
         type: mongoose.Schema.Types.ObjectId,
