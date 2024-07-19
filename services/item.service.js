@@ -4,6 +4,7 @@ const Item = require('../model/item.schema');
 let service = {};
 service.addItem = addItem;
 service.getItemDetail = getItemDetail;
+service.updateItemDetails = updateItemDetails;
 
 async function addItem(body, id, companyId) {
     try {
@@ -34,6 +35,24 @@ async function getItemDetail(id, companyId) {
         return itemDetail;
     } catch (error) {
         return Promise.reject("Unable to get all item data. Try again later!")
+    }
+};
+
+async function updateItemDetails(params, companyId, body) {
+    try {
+        const getFirm = await Firm.findById(params.firmId);
+        if (!getFirm) {
+            return Promise.reject("Firm not found!");
+        }
+        else {
+            if (getFirm.companyId.toString() !== companyId.toString()) {
+                return Promise.reject("Not authorized!");
+            }
+        }
+        const data = await Item.findOneAndUpdate({ _id: params.id }, body, { new: true });
+        return data;
+    } catch (error) {
+        return Promise.reject("Unable to update item data. Try again later!")
     }
 };
 
