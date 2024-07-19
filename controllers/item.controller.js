@@ -1,22 +1,6 @@
 const express = require('express');
 const ItemService = require('../services/item.service');
 
-const SaletaxSave = async (req, res) => {
-    try {
-        const unitData = await ItemService.addSaletax(req.body);
-        res.status(200).send(unitData);
-    } catch (error) {
-        res.status(500).json(error);
-    }
-};
-const SalepriceSave = async (req, res) => {
-    try {
-        const unitData = await ItemService.addSaleprice(req.body);
-        res.status(200).send(unitData);
-    } catch (error) {
-        res.status(500).json(error);
-    }
-};
 
 const ItemSave = async (req, res) => {
     try {
@@ -35,14 +19,22 @@ const getItem = async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-}
+};
+
+const updateItem = async (req, res) => {
+    try {
+        const updatedParty = await ItemService.updateItemDetails(req.params, req.user._id, req.body);
+        res.status(200).json(updatedParty);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
 
 
 
 module.exports = {
-    SaletaxSave,
-    SalepriceSave,
     ItemSave,
-    getItem
+    getItem,
+    updateItem
 
 };
