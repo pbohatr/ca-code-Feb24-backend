@@ -10,8 +10,4 @@ router.delete('/:firmId/delete/:id',Middleware.verifyToken, Party.partyRemove)
 
 
 
-
-
-
-
 module.exports = router;
