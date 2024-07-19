@@ -4,9 +4,8 @@ const cors = require('cors')
 const mongoose = require('mongoose');
 const dotenv = require("dotenv");
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 const routes = require("./routers");
-
-
 
 dotenv.config();
 
@@ -14,6 +13,8 @@ app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(fileUpload({ useTempFiles: true }));
+
 
 app.use(routes);
 

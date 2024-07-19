@@ -7,10 +7,8 @@ service.getCategory = getCategory
 service.getAllCategory = getAllCategory
 
 async function addCategory(body, id) {
-    console.log(">>>>",body,id)
     try {
         const existingFirm = await Firm.findById({_id:id});
-        console.log("existingFirm",existingFirm)
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
@@ -22,10 +20,8 @@ async function addCategory(body, id) {
 }
 
 async function getCategory(id) {
-    console.log(">>>>",id)
     try {
         const existingFirm = await Category.find({firmId :id});
-        console.log("existingFirm",existingFirm)
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
@@ -37,7 +33,6 @@ async function getCategory(id) {
 async function getAllCategory() {
     try {
         const existingFirm = await Category.find();
-        console.log("existingFirm",existingFirm)
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
@@ -46,8 +41,6 @@ async function getAllCategory() {
         return Promise.reject("Unable to create Category. Try again later!")
     }
 }
-
-
 
 
 module.exports = service;

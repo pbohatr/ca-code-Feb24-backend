@@ -26,10 +26,20 @@ const updateParty = async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
+};
+
+const partyRemove = async (req, res) => {
+    try {
+        await PartyService.deleteParty(req.params, req.user._id);
+        res.status(200).send("OK");
+    } catch (error) {
+        res.status(500).json(error);
+    }
 }
 
 module.exports = {
     PartySave,
     getParties,
-    updateParty
+    updateParty,
+    partyRemove
 };

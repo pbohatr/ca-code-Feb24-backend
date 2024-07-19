@@ -1,63 +1,48 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-const itemSchema = new Schema({
+const itemSchema = new mongoose.Schema({
     firmId: {
         type: mongoose.Schema.ObjectId,
         ref: "Firm"
     },
-    itemName: {
-        type: String,
-        required: true,
-    },
-    itemHsn: {
-        type: String,
-        required: true,
-    },
-    itemCode: {
-        type: String,
-        required: true,
-    },
-    openingQuantity: {
-        type: String,
-        required: true,
-    },
-    price: {
-        type: String,
-        required: true,
-    },
-    date: {
-        type: String,
-        required: true,
-    },
-    minStock: {
-        type: String,
-        required: true,
-    },
-    location: {
-        type: String,
-        required: true,
+    itemName: { type: String, required: true },
+    itemHsn: { type: String },
+    selectUnit: {
+        baseUnit: { type: String },
+        secondaryUnit: { type: String }
     },
     categoryId: {
         type: mongoose.Schema.ObjectId,
         ref: "Category"
     },
-    salepriceId: {
-        type: mongoose.Schema.ObjectId,
-        ref: "Saleprice"
-    },
     unitId: {
         type: mongoose.Schema.ObjectId,
         ref: "Unit"
     },
-    taxes: {
-        type: String,
-        required: true,
+    salePrice: {
+        salePrice: { type: Number },
+        tax: { type: Boolean, default: false },
+        disOnSale: { type: Number },
+        discountType: { type: String, default: 'Percentage' }
     },
-    
-}, {
-    timestamps: true
-});
+    wholesalePrice: {
+        wholesalePrice: { type: Number },
+        tax: { type: Boolean, default: false },
+        minimumWholesaleQty: { type: Number }
+    },
+    purchasePrice: {
+        purchasePrice: { type: Number },
+        tax: { type: Boolean, default: false }
+    },
+    taxRate: { type: String },
+    stock: {
+        openingQuantity: { type: Number },
+        atPrice: { type: Number },
+        asOfDate: { type: Date, default: Date.now },
+        minStockToMaintain: { type: Number },
+        location: { type: String }
+    }
+}, { timestamps: true });
 
-const Item = mongoose.model('Item', itemSchema);
-module.exports = Item;
+const Party = mongoose.model('Item', itemSchema);
+module.exports = Party;
