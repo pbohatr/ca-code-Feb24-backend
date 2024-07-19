@@ -4,9 +4,9 @@ const Item = require('../controllers/item.controller')
 const Middleware = require('../services/token.service')
 
 
-router.post('/addSale',Item.SaletaxSave )
-router.post('/addprice',Item.SalepriceSave )
-router.post('/additem/:id',Middleware.verifyToken,Item.ItemSave )
+router.post('/:id/insertItem', Middleware.verifyToken, Item.ItemSave )
+router.get('/:id/allItemData', Middleware.verifyToken, Item.getItem )
+
 
 
 

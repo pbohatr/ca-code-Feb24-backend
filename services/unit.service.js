@@ -21,7 +21,7 @@ async function addUnit(body) {
 async function getAllUnits() {
     try {
         const unit = await Unit.find();
-        console.log("unit",unit)
+        // console.log("unit",unit)
         return unit;
     } catch (error) {
         return Promise.reject("Unable to find units.")
@@ -42,7 +42,7 @@ async function addSelfUnit(body, id) {
 }
 
 async function getSelfUnit(id) {
-    console.log(">>>>",id)
+    // console.log(">>>>",id)
     try {
         const existingFirm = await Unit.find({firmId :id});
         if (!existingFirm) {

@@ -9,7 +9,6 @@ service.getFirmById = getFirmById;
 service.addFirmNew = addFirmNew;
 service.editFirmData = editFirmData
 
-
 async function registerUser(body) {
     try {
         const existingUser = await Company.findOne({ email: body.email });
@@ -64,9 +63,7 @@ async function getFirmById(body) {
 
 async function addFirmNew(body, user) {
     try {
-        console.log("body>>>", body, user);
         const addCompany = await Firm.create({ ...body, companyId: user?._id });
-        console.log("addCompany>>>", addCompany);
         return addCompany;
     } catch (error) {
         console.error("Error creating company:", error);
@@ -82,20 +79,13 @@ async function editFirmData(id, body, user) {
         }
         const editCompany = await Firm.findOneAndUpdate({ _id: id }, body, { new: true });
         if (!editCompany) {
-            console.log("No company found with the specified ID.");
+            return Promise.reject("Comapny data not found!");
         }
         return editCompany;
     } catch (error) {
-        console.error("Error editing company:", error);
         return Promise.reject("Unable to edit company. Try again later!");
     }
 }
-
-
-
-
-
-
 
 
 
