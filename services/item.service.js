@@ -5,6 +5,7 @@ let service = {};
 service.addItem = addItem;
 service.getItemDetail = getItemDetail;
 service.updateItemDetails = updateItemDetails;
+service.deleteItem = deleteItem
 
 async function addItem(body, id, companyId) {
     try {
@@ -53,6 +54,25 @@ async function updateItemDetails(params, companyId, body) {
         return data;
     } catch (error) {
         return Promise.reject("Unable to update item data. Try again later!")
+    }
+};
+
+async function deleteItem(params, companyId) {
+    try {
+        console.log("params", params)
+        console.log(" companyId", companyId)
+
+        const getFirm = await Firm.findById(params.firmId);
+        console.log("getFirm",getFirm)
+
+        if (getFirm.companyId.toString() !== companyId.toString()) {
+            return Promise.reject("Not authorized!");
+        }
+        console.log("rrr")
+        await Item.findOneAndDelete({_id: params.id});
+        return true;
+    } catch (error) {
+        return Promise.reject("Unable to get all party data. Try again later!")
     }
 };
 

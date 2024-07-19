@@ -39,9 +39,31 @@ const getSelfUnit = async (req, res) => {
     }
 }
 
+const changeUnit = async (req, res) => {
+    console.log("req.params",req.params)
+   //  console.log("userid",req.user._id)
+    console.log("req.body",req.body)
+   try {
+       const updatedUnit = await UnitService.updateUnitdetails(req.params,req.user._id, req.body);
+       res.status(200).json(updatedUnit);
+   } catch (error) {
+       res.status(500).json(error);
+   }
+}
+const unitRemove = async (req, res) => {
+    try {
+        await UnitService.deleteUnit(req.params, req.user._id);
+        res.status(200).send("OK");
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
 module.exports = {
     UnitSave,
     getUnit,
     UnitSelfSave,
-    getSelfUnit
+    getSelfUnit,
+    changeUnit,
+    unitRemove
       };

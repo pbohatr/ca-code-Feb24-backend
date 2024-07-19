@@ -52,16 +52,14 @@ const changeCategory = async (req, res) => {
 
 
 
-const CategoryDelete = async (req, res) => {
+const categoryRemove = async (req, res) => {
     try {
-        const { id } = req.params;
-        console.log("CategoryDelete", { id })
-        const result = await CategoryService.deleteCategory(id);
-        res.status(200).send(result);
+        await CategoryService.deleteCategory(req.params, req.user._id);
+        res.status(200).send("OK");
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json(error);
     }
-};
+}
 
 
 module.exports = {
@@ -69,5 +67,5 @@ module.exports = {
     getCategory,
     getAllCategory,
     changeCategory,
-    CategoryDelete
+    categoryRemove
 };
