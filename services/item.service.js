@@ -1,35 +1,10 @@
-const Sale = require('../model/saletax.schema');
-const Saleprice = require('../model/saleprice.schema');
 const Firm = require('../model/firm.schema');
 const Item = require('../model/item.schema');
 
-
-
-
 let service = {};
-service.addSaletax = addSaletax;
-service.addSaleprice = addSaleprice
-service.addItem = addItem
-
-
-
-
-async function addSaletax(body) {
-    try {
-        const data = await Sale.create(body);
-        return data;
-    } catch (error) {
-        return Promise.reject("Unable to create Unit. Try again later!")
-    }
-}
-async function addSaleprice(body) {
-    try {
-        const data = await Saleprice.create(body);
-        return data;
-    } catch (error) {
-        return Promise.reject("Unable to create Unit. Try again later!")
-    }
-}
+service.addItem = addItem;
+service.getItemDetail = getItemDetail;
+service.updateItemDetails = updateItemDetails;
 
 async function addItem(body, id, companyId) {
     try {
@@ -37,9 +12,9 @@ async function addItem(body, id, companyId) {
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
-        // if (existingFirm.companyId.toString() !== companyId.toString()) {
-        //     return Promise.reject("Not authorized!");
-        // }
+        if (existingFirm.companyId.toString() !== companyId.toString()) {
+            return Promise.reject("Not authorized!");
+        }
         await Item.create({ ...body, firmId: existingFirm._id });
         return true;
     } catch (error) {
@@ -47,5 +22,38 @@ async function addItem(body, id, companyId) {
     }
 };
 
+async function getItemDetail(id, companyId) {
+    try {
+        const getFirm = await Firm.findById(id);
+        if (!getFirm) {
+            return Promise.reject("Firm not found!");
+        }
+        if (getFirm.companyId.toString() !== companyId.toString()) {
+            return Promise.reject("Not authorized!");
+        }
+        const itemDetail = await Item.find({ firmId: id });
+        return itemDetail;
+    } catch (error) {
+        return Promise.reject("Unable to get all item data. Try again later!")
+    }
+};
+
+async function updateItemDetails(params, companyId, body) {
+    try {
+        const getFirm = await Firm.findById(params.firmId);
+        if (!getFirm) {
+            return Promise.reject("Firm not found!");
+        }
+        else {
+            if (getFirm.companyId.toString() !== companyId.toString()) {
+                return Promise.reject("Not authorized!");
+            }
+        }
+        const data = await Item.findOneAndUpdate({ _id: params.id }, body, { new: true });
+        return data;
+    } catch (error) {
+        return Promise.reject("Unable to update item data. Try again later!")
+    }
+};
 
 module.exports = service;

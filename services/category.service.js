@@ -9,10 +9,8 @@ service.deleteCategory = deleteCategory
 service.updateCategorydetails = updateCategorydetails
 
 async function addCategory(body, id) {
-    console.log(">>>>", body, id)
     try {
-        const existingFirm = await Firm.findById({ _id: id });
-        console.log("existingFirm", existingFirm)
+        const existingFirm = await Firm.findById({_id:id});
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
@@ -24,10 +22,8 @@ async function addCategory(body, id) {
 }
 
 async function getCategory(id) {
-    console.log(">>>>", id)
     try {
-        const existingFirm = await Category.find({ firmId: id });
-        console.log("existingFirm", existingFirm)
+        const existingFirm = await Category.find({firmId :id});
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
@@ -39,7 +35,6 @@ async function getCategory(id) {
 async function getAllCategory() {
     try {
         const existingFirm = await Category.find();
-        console.log("existingFirm", existingFirm)
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
@@ -81,8 +76,6 @@ async function deleteCategory(id) {
         return Promise.reject("Unable to delete Category. Try again later!");
     }
 }
-
-
 
 
 

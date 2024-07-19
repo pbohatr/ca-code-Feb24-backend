@@ -12,7 +12,7 @@ const UnitSave = async (req, res) => {
 const getUnit = async (req, res) => {
     try {
         const categoryData = await UnitService.getAllUnits();
-        console.log("categoryData",categoryData)
+        // console.log("categoryData",categoryData)
         res.status(200).send(categoryData);
     } catch (error) {
         res.status(500).json(error);
@@ -31,7 +31,7 @@ const UnitSelfSave = async (req, res) => {
 const getSelfUnit = async (req, res) => {
     try {
         const {id} = req.params
-        console.log("reqparams>>>",{id})
+        // console.log("reqparams>>>",{id})
         const unitData = await UnitService.getSelfUnit(req.params.id);
         res.status(200).send(unitData);
     } catch (error) {
