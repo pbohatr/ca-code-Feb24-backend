@@ -18,8 +18,21 @@ const SalepriceSave = async (req, res) => {
     }
 };
 
+const ItemSave = async (req, res) => {
+    try {
+        console.log("req>>>>>",req.body,req.params.id)
+        await ItemService.addItem(req.body, req.params.id);
+        res.status(200).send("OK");
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+
+
 module.exports = {
     SaletaxSave,
-    SalepriceSave
+    SalepriceSave,
+    ItemSave
     
       };

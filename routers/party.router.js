@@ -8,8 +8,4 @@ router.get('/:id/getAllData', Middleware.verifyToken, Party.getParties)
 router.patch('/:firmId/update/:id',Middleware.verifyToken, Party.updateParty)
 
 
-
-
-
-
 module.exports = router;
