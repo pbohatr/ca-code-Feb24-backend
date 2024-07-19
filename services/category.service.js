@@ -5,12 +5,14 @@ let service = {};
 service.addCategory = addCategory;
 service.getCategory = getCategory
 service.getAllCategory = getAllCategory
+service.deleteCategory = deleteCategory
+service.updateCategorydetails = updateCategorydetails
 
 async function addCategory(body, id) {
-    console.log(">>>>",body,id)
+    console.log(">>>>", body, id)
     try {
-        const existingFirm = await Firm.findById({_id:id});
-        console.log("existingFirm",existingFirm)
+        const existingFirm = await Firm.findById({ _id: id });
+        console.log("existingFirm", existingFirm)
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
@@ -22,10 +24,10 @@ async function addCategory(body, id) {
 }
 
 async function getCategory(id) {
-    console.log(">>>>",id)
+    console.log(">>>>", id)
     try {
-        const existingFirm = await Category.find({firmId :id});
-        console.log("existingFirm",existingFirm)
+        const existingFirm = await Category.find({ firmId: id });
+        console.log("existingFirm", existingFirm)
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
@@ -37,7 +39,7 @@ async function getCategory(id) {
 async function getAllCategory() {
     try {
         const existingFirm = await Category.find();
-        console.log("existingFirm",existingFirm)
+        console.log("existingFirm", existingFirm)
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
@@ -46,6 +48,40 @@ async function getAllCategory() {
         return Promise.reject("Unable to create Category. Try again later!")
     }
 }
+
+async function updateCategorydetails(params, companyId, body) {
+    try {
+        const getFirm = await Firm.findById(params.firmId);
+        if (!getFirm) {
+            return Promise.reject("Firm not found!");
+        }
+        else {
+            if (getFirm.companyId.toString() !== companyId.toString()) {
+                return Promise.reject("Not authorized!");
+            }
+        }
+        const data = await Category.findOneAndUpdate({ _id: params.id }, body, { new: true });
+        return data;
+    } catch (error) {
+        return Promise.reject("Unable to update party data. Try again later!")
+    }
+}
+
+async function deleteCategory(id) {
+    try {
+        console.log("id", id)
+        const category = await Category.find({ firmId: id });
+        console.log("category", category)
+        if (!category) {
+            return Promise.reject("Category not found!");
+        }
+        await Category.findByIdAndDelete(category);
+        return { message: "Category deleted successfully!" };
+    } catch (error) {
+        return Promise.reject("Unable to delete Category. Try again later!");
+    }
+}
+
 
 
 
