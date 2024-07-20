@@ -31,7 +31,7 @@ async function getItemDetail(id, companyId) {
         if (getFirm.companyId.toString() !== companyId.toString()) {
             return Promise.reject("Not authorized!");
         }
-        const itemDetail = await Item.find({ firmId: id });
+        const itemDetail = await Item.find({ firmId: id }).populate('unitId').populate('category');
         return itemDetail;
     } catch (error) {
         return Promise.reject("Unable to get all item data. Try again later!")

@@ -7,11 +7,8 @@ const itemSchema = new mongoose.Schema({
     },
     itemName: { type: String, required: true },
     itemHsn: { type: String },
-    selectUnit: {
-        baseUnit: { type: String },
-        secondaryUnit: { type: String }
-    },
-    categoryId: {
+    itemCode: { type: String },
+    category: {
         type: mongoose.Schema.ObjectId,
         ref: "Category"
     },
@@ -41,7 +38,11 @@ const itemSchema = new mongoose.Schema({
         asOfDate: { type: Date, default: Date.now },
         minStockToMaintain: { type: Number },
         location: { type: String }
-    }
+    },
+    seletedUnit: {
+        baseUnit: { type: String },
+        secondaryUnit: { type: String }
+    },
 }, { timestamps: true });
 
 const Party = mongoose.model('Item', itemSchema);
