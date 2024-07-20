@@ -62,21 +62,24 @@ async function updateCategorydetails(params, companyId, body) {
     }
 }
 
-async function deleteCategory(id) {
+async function deleteCategory(params, companyId) {
     try {
-        console.log("id", id)
-        const category = await Category.find({ firmId: id });
-        console.log("category", category)
-        if (!category) {
-            return Promise.reject("Category not found!");
-        }
-        await Category.findByIdAndDelete(category);
-        return { message: "Category deleted successfully!" };
-    } catch (error) {
-        return Promise.reject("Unable to delete Category. Try again later!");
-    }
-}
+        console.log("params", params)
+        console.log(" companyId", companyId)
 
+        const getFirm = await Firm.findById(params.firmId);
+        console.log("getFirm",getFirm)
+
+        if (getFirm.companyId.toString() !== companyId.toString()) {
+            return Promise.reject("Not authorized!");
+        }
+        console.log("rrr")
+        await Category.findOneAndDelete({_id: params.id});
+        return true;
+    } catch (error) {
+        return Promise.reject("Unable to get all party data. Try again later!")
+    }
+};
 
 
 module.exports = service;

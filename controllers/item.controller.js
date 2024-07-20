@@ -29,12 +29,21 @@ const updateItem = async (req, res) => {
         res.status(500).json(error);
     }
 };
+const itemRemove = async (req, res) => {
+    try {
+        await ItemService.deleteItem(req.params, req.user._id);
+        res.status(200).send("OK");
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 
 
 
 module.exports = {
     ItemSave,
     getItem,
-    updateItem
+    updateItem,
+    itemRemove
 
 };
