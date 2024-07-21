@@ -9,16 +9,25 @@ service.deleteItem = deleteItem
 
 async function addItem(body, id, companyId) {
     try {
+        console.log("body, id, companyId", body, id, companyId)
         const existingFirm = await Firm.findById(id);
+        console.log("existingFirm", existingFirm)
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
         if (existingFirm.companyId.toString() !== companyId.toString()) {
             return Promise.reject("Not authorized!");
         }
+        if (!body.category) {
+            body.category = null;
+        }
+        if (!body.unitId) {
+            body.unitId = null;
+        }
         await Item.create({ ...body, firmId: existingFirm._id });
         return true;
     } catch (error) {
+        console.log("fds", error)
         return Promise.reject("Unable to create Item. Try again later!")
     }
 };
@@ -63,13 +72,13 @@ async function deleteItem(params, companyId) {
         console.log(" companyId", companyId)
 
         const getFirm = await Firm.findById(params.firmId);
-        console.log("getFirm",getFirm)
+        console.log("getFirm", getFirm)
 
         if (getFirm.companyId.toString() !== companyId.toString()) {
             return Promise.reject("Not authorized!");
         }
         console.log("rrr")
-        await Item.findOneAndDelete({_id: params.id});
+        await Item.findOneAndDelete({ _id: params.id });
         return true;
     } catch (error) {
         return Promise.reject("Unable to get all party data. Try again later!")
