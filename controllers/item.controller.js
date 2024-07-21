@@ -4,7 +4,6 @@ const ItemService = require('../services/item.service');
 
 const ItemSave = async (req, res) => {
     try {
-        console.log("req>>>>>", req.body, req.params.id)
         await ItemService.addItem(req.body, req.params.id, req.user._id);
         res.status(200).send("OK");
     } catch (error) {

@@ -10,11 +10,14 @@ const itemSchema = new mongoose.Schema({
     itemCode: { type: String },
     category: {
         type: mongoose.Schema.ObjectId,
-        ref: "Category"
+        ref: "Category",
+        default: null
+
     },
     unitId: {
         type: mongoose.Schema.ObjectId,
-        ref: "Unit"
+        ref: "Unit",
+        default: null
     },
     salePrice: {
         salePrice: { type: Number },
