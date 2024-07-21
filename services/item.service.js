@@ -9,9 +9,7 @@ service.deleteItem = deleteItem
 
 async function addItem(body, id, companyId) {
     try {
-        console.log("body, id, companyId", body, id, companyId)
         const existingFirm = await Firm.findById(id);
-        console.log("existingFirm", existingFirm)
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
@@ -27,7 +25,6 @@ async function addItem(body, id, companyId) {
         await Item.create({ ...body, firmId: existingFirm._id });
         return true;
     } catch (error) {
-        console.log("fds", error)
         return Promise.reject("Unable to create Item. Try again later!")
     }
 };
