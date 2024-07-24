@@ -9,7 +9,9 @@ service.deleteItem = deleteItem
 
 async function addItem(body, id, companyId) {
     try {
+        console.log("body",body, id, companyId)
         const existingFirm = await Firm.findById(id);
+        console.log("existingFirm>>",existingFirm)
         if (!existingFirm) {
             return Promise.reject("Firm not found!");
         }
