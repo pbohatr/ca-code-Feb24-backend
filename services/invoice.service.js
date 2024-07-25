@@ -27,7 +27,7 @@ async function getAllInvoices(id, companyId) {
         if (getFirm.companyId.toString() !== companyId.toString()) {
             return Promise.reject("Not authorized!");
         }
-        const allInvoices = await Invoice.findOne({ firmId: id }).populate("partyId")
+        const allInvoices = await Invoice.find({ firmId: id })?.populate("partyId")
         console.log("allInvoices",allInvoices)
         return allInvoices;
     } catch (error) {
