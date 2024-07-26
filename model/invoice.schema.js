@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const InvoiceSchema = new Schema({
   firmId: {type: mongoose.Schema.ObjectId,ref: "Firm"},
   partyId: {type: mongoose.Schema.ObjectId,ref: "Party"},
-  type: { type: String, default: "Credit" },
+  type: { type: String },
   status: { type: String, default: "Pending" },
   customerName: { type: String },
   billingAddress: { type: String },

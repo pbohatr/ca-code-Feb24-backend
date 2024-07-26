@@ -1,11 +1,14 @@
 const Party = require('../model/party.schema');
 const Firm = require('../model/firm.schema');
+const Invoice = require('../model/invoice.schema');
+
 
 let service = {};
 service.addParty = addParty;
 service.getAllParties = getAllParties;
 service.updatePartyDetails = updatePartyDetails;
 service.deleteParty = deleteParty;
+service.getAllPartiesSale = getAllPartiesSale
 
 async function addParty(body, id, companyId) {
     try {
@@ -68,6 +71,19 @@ async function deleteParty(params, companyId) {
         console.log("rrr")
         await Party.findOneAndDelete({_id: params.id});
         return true;
+    } catch (error) {
+        return Promise.reject("Unable to get all party data. Try again later!")
+    }
+};
+
+async function getAllPartiesSale(id, companyId) {
+    try {
+        // const getFirm = await Firm.findById(id);
+        // if (getFirm.companyId.toString() !== companyId.toString()) {
+        //     return Promise.reject("Not authorized!");
+        // }
+        const allParties = await Invoice.find({ partyId: id });
+        return allParties;
     } catch (error) {
         return Promise.reject("Unable to get all party data. Try again later!")
     }

@@ -36,10 +36,20 @@ const partyRemove = async (req, res) => {
         res.status(500).json(error);
     }
 }
+const getPartiesSaleData = async (req, res) => {
+    try {
+        const allData = await PartyService.getAllPartiesSale(req.params.id);
+        res.status(200).json(allData);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 
 module.exports = {
     PartySave,
     getParties,
     updateParty,
-    partyRemove
+    partyRemove,
+    getPartiesSaleData
+    
 };
