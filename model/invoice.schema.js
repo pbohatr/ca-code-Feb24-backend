@@ -36,7 +36,8 @@ const InvoiceSchema = new Schema({
     amount: { type: Number },
     referenceNo: { type: String }
   }]
-});
+  
+}, { timestamps: true });
 
 const Invoice = mongoose.model('Invoice', InvoiceSchema);
 module.exports = Invoice;

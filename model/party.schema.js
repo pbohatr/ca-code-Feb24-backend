@@ -43,6 +43,11 @@ const partySchema = new Schema({
         type: String,
         default: "",
     },
+    balance: {
+        type: Number,
+        default: 0
+    },
+
     additionalField: [{
         name: {
             type: String,

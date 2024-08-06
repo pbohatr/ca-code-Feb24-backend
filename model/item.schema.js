@@ -42,10 +42,10 @@ const itemSchema = new mongoose.Schema({
         minStockToMaintain: { type: Number },
         location: { type: String }
     },
-    seletedUnit: {
-        baseUnit: { type: String },
-        secondaryUnit: { type: String }
-    },
+    // seletedUnit: {
+    //     baseUnit: { type: String },
+    //     secondaryUnit: { type: String }
+    // },
 }, { timestamps: true });
 
 const Party = mongoose.model('Item', itemSchema);

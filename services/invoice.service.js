@@ -1,5 +1,6 @@
 const Invoice = require('../model/invoice.schema');
 const Firm = require('../model/firm.schema');
+const Party = require('../model/party.schema');
 
 let service = {};
 service.addInvoice = addInvoice;
@@ -15,7 +16,26 @@ async function addInvoice(body, id, companyId) {
         if (existingFirm.companyId.toString() !== companyId.toString()) {
             return Promise.reject("Not authorized!");
         }
-        await Invoice.create({ ...body, firmId: existingFirm._id });
+        let invoiceStatus = "Pending";
+        if (body.balance === 0) {
+            invoiceStatus = "Paid";
+        } else if (body.balance === body.total) {
+            invoiceStatus = "Unpaid";
+        } else if (body.balance < body.total) {
+            invoiceStatus = "Partial";
+        }
+
+        const party = await Party.findById(body.partyId);
+        if (!party) {
+            return Promise.reject("Party not found!");
+        }
+        console.log("party", party)
+        // Calculate the new balance
+        const newBalance = party.balance + body.balance ;
+        // Update the party's balance
+
+        await Party.findByIdAndUpdate(body.partyId, { balance: newBalance });
+        await Invoice.create({ ...body, status: invoiceStatus, firmId: existingFirm._id });
         return true;
     } catch (error) {
         return Promise.reject("Unable to create Invoice. Try again later!")
